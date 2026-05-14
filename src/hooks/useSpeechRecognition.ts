@@ -20,8 +20,7 @@ export interface SpeechState {
 export function useSpeechRecognition(lang: "ar-SA" | "en-US") {
   const [state, setState] = useState<SpeechState>({
     listening: false,
-    supported: typeof window !== "undefined" &&
-      !!(window.SpeechRecognition || window.webkitSpeechRecognition),
+    supported: false,
     interim: "",
     finals: [],
     error: null,
@@ -30,6 +29,11 @@ export function useSpeechRecognition(lang: "ar-SA" | "en-US") {
   const wantOnRef = useRef(false);
   const langRef = useRef(lang);
   langRef.current = lang;
+
+  useEffect(() => {
+    const ok = !!(window.SpeechRecognition || window.webkitSpeechRecognition);
+    setState(s => (s.supported === ok ? s : { ...s, supported: ok }));
+  }, []);
 
   const create = useCallback(() => {
     const Ctor = window.SpeechRecognition || window.webkitSpeechRecognition;
