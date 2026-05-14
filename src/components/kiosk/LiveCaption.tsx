@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Mic, MicOff, Radio } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { t, type Lang } from "@/lib/i18n";
+import { SignVisual } from "@/components/kiosk/SignVisual";
 
 interface Props {
   lang: Lang;
@@ -72,6 +73,8 @@ export function LiveCaption({ lang, listening, supported, interim, lastFinal, on
           )}
         </AnimatePresence>
       </div>
+
+      <SignVisual lang={lang} text={text} />
     </div>
   );
 }
