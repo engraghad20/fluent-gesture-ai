@@ -1,172 +1,124 @@
-// Map common spoken words/phrases (AR + EN) to large pictograms for deaf users.
-// Each entry has keyword regexes (case-insensitive) and a visual.
-
 export interface VisualCue {
   id: string;
-  icon: string;        // emoji pictogram
-  en: string;          // English label
-  ar: string;          // Arabic label
+  icon: string;
+  en: string;
+  ar: string;
   keywordsEn: RegExp;
   keywordsAr: RegExp;
 }
+
+const AR_DIACRITICS = /[\u0610-\u061A\u064B-\u065F\u0670\u06D6-\u06ED]/g;
 
 export const VISUAL_CUES: VisualCue[] = [
   {
     id: "greeting",
     icon: "👋",
-    en: "Hello / Welcome",
-    ar: "مرحبًا / أهلًا",
-    keywordsEn: /\b(hello|hi|hey|welcome|good\s*(morning|evening|afternoon))\b/i,
-    keywordsAr: /(مرحبا|مرحبًا|اهلا|أهلًا|أهلا|السلام|صباح|مساء)/,
+    en: "Welcome",
+    ar: "ترحيب",
+    keywordsEn: /\b(hello|hi|hey|welcome|greetings|good\s*(morning|evening|afternoon)|how\s*are\s*you)\b/i,
+    keywordsAr: /(ترحيب|مرحبا|مرحبه|اهلا|اهلن|اهلين|حياك|السلام|صباح\s*الخير|مساء\s*الخير|كيفك|كيف\s*حالك)/i,
   },
   {
     id: "yes",
     icon: "✅",
-    en: "Yes / Confirmed",
-    ar: "نعم / مؤكد",
-    keywordsEn: /\b(yes|yeah|sure|of course|correct|confirmed|approved|okay|ok)\b/i,
-    keywordsAr: /(نعم|أيوه|ايوه|تمام|أكيد|اكيد|موافق|تم|صح|صحيح)/,
+    en: "Yes",
+    ar: "نعم",
+    keywordsEn: /\b(yes|yeah|yep|sure|ok|okay|correct|confirmed|approved|agree|accepted|right|true|of\s*course)\b/i,
+    keywordsAr: /(نعم|ايه|ايوا|ايوه|اي|تمام|اوكي|اوك|موافق|اكيد|صح|صحيح|مؤكد|قبول|قبلت|تم)/i,
   },
   {
     id: "no",
     icon: "❌",
-    en: "No / Not allowed",
-    ar: "لا / غير مسموح",
-    keywordsEn: /\b(no|not\s*allowed|denied|rejected|cannot|can't|sorry)\b/i,
-    keywordsAr: /(^|\s)(لا|ممنوع|مرفوض|غير\s*مسموح|آسف|اسف|متأسف)/,
+    en: "No",
+    ar: "لا",
+    keywordsEn: /\b(no|nope|not|never|cannot|can't|cant|denied|rejected|refused|declined|not\s*allowed|sorry)\b/i,
+    keywordsAr: /(^|\s)(لا|كلا|مو|مش|ليس|ممنوع|مرفوض|ارفض|رفض|غير\s*مسموح|ما\s*اقدر|اسف|اعتذر)(\s|$)/i,
   },
   {
     id: "wait",
     icon: "⏳",
     en: "Please wait",
-    ar: "انتظر من فضلك",
-    keywordsEn: /\b(wait|hold on|one moment|just a (sec|second|minute)|please wait)\b/i,
-    keywordsAr: /(انتظر|انتظري|لحظة|دقيقة|ثانية|من\s*فضلك\s*انتظر)/,
+    ar: "انتظر",
+    keywordsEn: /\b(wait|waiting|hold\s*on|one\s*moment|a\s*moment|just\s*a\s*(sec|second|minute)|please\s*wait|stay\s*here)\b/i,
+    keywordsAr: /(انتظر|انتظري|انتظار|استنى|استني|اصبر|اصبري|لحظة|دقيقة|ثانية|انتبه\s*لحظة)/i,
   },
   {
     id: "id",
     icon: "🪪",
-    en: "Show ID",
-    ar: "أظهر الهوية",
-    keywordsEn: /\b(id|identification|passport|license|iqama|emirates id|national id)\b/i,
-    keywordsAr: /(هوية|الهوية|جواز|رخصة|إقامة|اقامة|بطاقة)/,
+    en: "ID card",
+    ar: "الهوية",
+    keywordsEn: /\b(id|identity|identification|id\s*card|national\s*id|passport|license|licence|iqama|residency|card)\b/i,
+    keywordsAr: /(هوية|الهويه|الهوية|بطاقة|بطاقه|جواز|الجواز|رخصة|رخصه|اقامة|اقامه|إقامة|الاقامة|الاقامه)/i,
   },
   {
-    id: "sign",
-    icon: "✍️",
-    en: "Please sign",
-    ar: "وقّع من فضلك",
-    keywordsEn: /\b(sign here|signature|please sign)\b/i,
-    keywordsAr: /(وقّع|وقع|توقيع|التوقيع)/,
-  },
-  {
-    id: "pay",
+    id: "payment",
     icon: "💳",
     en: "Payment",
     ar: "الدفع",
-    keywordsEn: /\b(pay|payment|card|cash|amount|invoice|bill|price|cost|fee)\b/i,
-    keywordsAr: /(ادفع|دفع|الدفع|بطاقة|نقدا|نقدًا|فاتورة|سعر|تكلفة|رسوم|مبلغ)/,
-  },
-  {
-    id: "money",
-    icon: "💰",
-    en: "Money / Riyals",
-    ar: "نقود / ريال",
-    keywordsEn: /\b(riyal|riyals|sar|aed|usd|dollars?|money)\b/i,
-    keywordsAr: /(ريال|درهم|دولار|نقود|فلوس|مال)/,
-  },
-  {
-    id: "phone",
-    icon: "📱",
-    en: "Phone number",
-    ar: "رقم الجوال",
-    keywordsEn: /\b(phone|mobile|number|contact|call you)\b/i,
-    keywordsAr: /(جوال|هاتف|رقم|اتصال|تواصل)/,
-  },
-  {
-    id: "appointment",
-    icon: "📅",
-    en: "Appointment",
-    ar: "موعد",
-    keywordsEn: /\b(appointment|booking|schedule|date|time|reservation)\b/i,
-    keywordsAr: /(موعد|حجز|جدول|تاريخ|وقت)/,
+    keywordsEn: /\b(pay|payment|paid|card|cash|visa|mada|apple\s*pay|amount|invoice|bill|fee|fees|price|cost|receipt)\b/i,
+    keywordsAr: /(دفع|الدفع|ادفع|تدفع|مدفوع|بطاقة|بطاقه|مدى|فيزا|كاش|نقد|فاتورة|فاتوره|مبلغ|رسوم|سعر|تكلفة|تكلفه|ايصال)/i,
   },
   {
     id: "doctor",
     icon: "🩺",
-    en: "Doctor / Clinic",
-    ar: "طبيب / عيادة",
-    keywordsEn: /\b(doctor|clinic|hospital|nurse|medical)\b/i,
-    keywordsAr: /(طبيب|دكتور|عيادة|مستشفى|ممرض|طبي)/,
+    en: "Doctor",
+    ar: "طبيب",
+    keywordsEn: /\b(doctor|physician|clinic|hospital|nurse|medical|medicine|patient|appointment\s*with\s*doctor)\b/i,
+    keywordsAr: /(طبيب|الطبيب|دكتور|الدكتور|عيادة|عياده|مستشفى|ممرض|ممرضة|ممرضه|طبي|مريض|دواء)/i,
   },
   {
-    id: "help",
-    icon: "🆘",
-    en: "Help available",
-    ar: "المساعدة متاحة",
-    keywordsEn: /\b(help|assist|support|need help)\b/i,
-    keywordsAr: /(مساعدة|أساعدك|اساعدك|دعم|محتاج)/,
+    id: "appointment",
+    icon: "📅",
+    en: "Timer / Time",
+    ar: "مؤقت / وقت",
+    keywordsEn: /\b(appointment|booking|reservation|schedule|scheduled|date|time|calendar|today|tomorrow|timer|temporary|minute|hour)\b/i,
+    keywordsAr: /(موعد|مواعيد|حجز|محجوز|جدول|تاريخ|وقت|الوقت|تقويم|اليوم|بكرة|بكره|ساعة|ساعه|دقيقة|دقيقه|مؤقت)/i,
   },
   {
-    id: "follow",
-    icon: "➡️",
-    en: "Follow me",
-    ar: "اتبعني",
-    keywordsEn: /\b(follow me|come with me|this way|over here)\b/i,
-    keywordsAr: /(اتبعني|تعال\s*معي|من\s*هنا|هنا)/,
-  },
-  {
-    id: "sit",
-    icon: "🪑",
-    en: "Please sit",
-    ar: "اجلس من فضلك",
-    keywordsEn: /\b(sit down|have a seat|please sit)\b/i,
-    keywordsAr: /(اجلس|تفضل\s*بالجلوس|اقعد)/,
-  },
-  {
-    id: "thanks",
+    id: "urgent",
     icon: "🙏",
-    en: "Thank you",
-    ar: "شكرًا",
-    keywordsEn: /\b(thank you|thanks|appreciate)\b/i,
-    keywordsAr: /(شكرا|شكرًا|مشكور|أقدر)/,
-  },
-  {
-    id: "done",
-    icon: "🎉",
-    en: "All done",
-    ar: "تم بنجاح",
-    keywordsEn: /\b(done|completed|finished|success|all set|ready)\b/i,
-    keywordsAr: /(تم|انتهى|جاهز|مكتمل|بنجاح)/,
+    en: "Urgent / Please",
+    ar: "عاجل / رجاءً",
+    keywordsEn: /\b(urgent|emergency|important|asap|quickly|immediately|please|kindly|need\s*now|right\s*now)\b/i,
+    keywordsAr: /(عاجل|طارئ|طوارئ|ضروري|مهم|بسرعة|فورا|الان|الحين|رجاء|رجاءا|لو\s*سمحت|من\s*فضلك|تكفى|تكفين)/i,
   },
   {
     id: "warning",
     icon: "⚠️",
-    en: "Warning",
+    en: "Alert / Warning",
     ar: "تنبيه",
-    keywordsEn: /\b(warning|careful|attention|caution|important)\b/i,
-    keywordsAr: /(تنبيه|انتباه|حذار|احذر|مهم)/,
-  },
-  {
-    id: "question",
-    icon: "❓",
-    en: "Question",
-    ar: "سؤال",
-    keywordsEn: /\?|\b(what|how|when|where|why|which|who)\b/i,
-    keywordsAr: /\؟|\?|(ما|ماذا|كيف|متى|أين|اين|لماذا|ليش|من)/,
+    keywordsEn: /\b(alert|warning|careful|attention|caution|notice|important|risk|danger|problem|issue)\b/i,
+    keywordsAr: /(تنبيه|تحذير|انتباه|انتبه|انتبهي|حذر|احذر|خطر|مشكلة|مشاكل|ملاحظة|ملاحظه)/i,
   },
 ];
 
-export function matchVisuals(text: string, lang: "ar" | "en"): VisualCue[] {
-  if (!text) return [];
+export function normalizeSpeechText(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(AR_DIACRITICS, "")
+    .replace(/[أإآٱ]/g, "ا")
+    .replace(/ى/g, "ي")
+    .replace(/ة/g, "ه")
+    .replace(/ـ/g, "")
+    .replace(/[،؛؟]/g, " ")
+    .replace(/[^\p{L}\p{N}\s?'’-]/gu, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+export function matchVisuals(text: string): VisualCue[] {
+  const normalized = normalizeSpeechText(text);
+  if (!normalized) return [];
+
   const matched: VisualCue[] = [];
   const seen = new Set<string>();
   for (const cue of VISUAL_CUES) {
-    const re = lang === "ar" ? cue.keywordsAr : cue.keywordsEn;
-    if (re.test(text) && !seen.has(cue.id)) {
+    cue.keywordsEn.lastIndex = 0;
+    cue.keywordsAr.lastIndex = 0;
+    if ((cue.keywordsEn.test(normalized) || cue.keywordsAr.test(normalized)) && !seen.has(cue.id)) {
       matched.push(cue);
       seen.add(cue.id);
     }
   }
-  return matched.slice(0, 6);
+  return matched;
 }

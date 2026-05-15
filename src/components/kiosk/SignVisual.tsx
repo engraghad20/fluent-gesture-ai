@@ -9,14 +9,14 @@ interface Props {
 }
 
 export function SignVisual({ lang, text }: Props) {
-  const cues = matchVisuals(text, lang);
+  const cues = matchVisuals(text);
 
   return (
     <div className="glass mt-4 rounded-xl p-4">
       <div className="mb-3 flex items-center gap-2">
         <Eye className="size-4 text-cyan-glow" />
         <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-muted-foreground">
-          {lang === "ar" ? "رسوم توضيحية للأصم" : "Visual cues for the deaf"}
+          {lang === "ar" ? "إعلان ثنائي اللغة للأصم" : "Bilingual visual announcement"}
         </h3>
         {cues.length > 0 && (
           <span className="ml-auto rounded-full bg-cyan-glow/15 px-2 py-0.5 text-xs text-cyan-glow">
@@ -29,8 +29,8 @@ export function SignVisual({ lang, text }: Props) {
       {cues.length === 0 ? (
         <div className="flex min-h-[110px] items-center justify-center text-center text-sm text-muted-foreground">
           {lang === "ar"
-            ? "ستظهر هنا رسوم توضيحية فورية مع كلام الموظف."
-            : "Pictograms will appear here in real time as staff speaks."}
+            ? "تحدث بكلمات مثل: ترحيب، نعم، لا، انتظر، الهوية، الدفع، طبيب، مؤقت، عاجل، تنبيه."
+            : "Say words like: welcome, yes, no, wait, ID, payment, doctor, time, urgent, alert."}
         </div>
       ) : (
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
@@ -54,7 +54,10 @@ export function SignVisual({ lang, text }: Props) {
                   {c.icon}
                 </motion.span>
                 <span className="text-center text-xs font-semibold leading-tight text-foreground">
-                  {lang === "ar" ? c.ar : c.en}
+                  {c.ar}
+                  <span className="block text-[0.68rem] font-medium text-muted-foreground" dir="ltr">
+                    {c.en}
+                  </span>
                 </span>
               </motion.div>
             ))}
