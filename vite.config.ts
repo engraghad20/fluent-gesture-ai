@@ -16,5 +16,10 @@ export default defineConfig({
   plugins: isNetlifyBuild ? [netlify()] : [],
   tanstackStart: {
     server: { entry: "server" },
+    prerender: {
+      enabled: true,
+      crawlLinks: true,
+      failOnError: true,
+    },
   },
 });
