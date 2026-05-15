@@ -9,7 +9,7 @@ interface Props {
 }
 
 export function SignVisual({ lang, text }: Props) {
-  const cues = matchVisuals(text, lang);
+  const cues = matchVisuals(text);
 
   return (
     <div className="glass mt-4 rounded-xl p-4">
@@ -54,7 +54,10 @@ export function SignVisual({ lang, text }: Props) {
                   {c.icon}
                 </motion.span>
                 <span className="text-center text-xs font-semibold leading-tight text-foreground">
-                  {lang === "ar" ? c.ar : c.en}
+                  {c.ar}
+                  <span className="block text-[0.68rem] font-medium text-muted-foreground" dir="ltr">
+                    {c.en}
+                  </span>
                 </span>
               </motion.div>
             ))}
