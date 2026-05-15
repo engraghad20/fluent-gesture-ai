@@ -69,8 +69,8 @@ export const VISUAL_CUES: VisualCue[] = [
   {
     id: "appointment",
     icon: "📅",
-    en: "Appointment / Time",
-    ar: "موعد / وقت",
+    en: "Timer / Time",
+    ar: "مؤقت / وقت",
     keywordsEn: /\b(appointment|booking|reservation|schedule|scheduled|date|time|calendar|today|tomorrow|timer|temporary|minute|hour)\b/i,
     keywordsAr: /(موعد|مواعيد|حجز|محجوز|جدول|تاريخ|وقت|الوقت|تقويم|اليوم|بكرة|بكره|ساعة|ساعه|دقيقة|دقيقه|مؤقت)/i,
   },
